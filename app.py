@@ -2,7 +2,7 @@ import os
 import logging
 from flask import Flask, request
 from telegram import Bot, Update
-from telegram.ext import Dispatcher, CommandHandler, MessageHandler, Filters
+from telegram.ext import Application, CommandHandler, MessageHandler, Filters
 from PIL import Image
 import pytesseract
 
