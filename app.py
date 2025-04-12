@@ -13,21 +13,21 @@ import pytesseract
 # تنظیمات لاگ
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
-# ⚙️ مقداردهی اولیه Flask
+#  مقداردهی اولیه Flask
 app = Flask(__name__)
 
-# 🧠 تنظیمات ربات
+#  تنظیمات ربات
 TOKEN = "8173513779:AAGOlPrH4t_X2IMQEbFTJkVfRu6bTf_aE0c"  # ← اینجا توکن خودت رو بذار
 bot = Bot(token=TOKEN)
 
 # اتصال Dispatcher به Flask
 dispatcher = Dispatcher(bot, None, workers=0)
 
-# ✅ دستور /start
+#  دستور /start
 def start(update, context):
     update.message.reply_text("سلام! 👋\nیه تصویر بفرست تا متنتو استخراج کنم 🖼️➡️🔤")
 
-# ✅ هندلر عکس‌ها
+#  هندلر عکس‌ها
 def handle_photo(update, context):
     photo_file = update.message.photo[-1].get_file()
     file_path = f"{update.message.chat.id}_image.jpg"
@@ -54,14 +54,14 @@ def handle_photo(update, context):
 dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(MessageHandler(Filters.photo, handle_photo))
 
-# 🔁 وبهوک برای دریافت آپدیت‌ها
+#  وبهوک برای دریافت آپدیت‌ها
 @app.route(f"/{TOKEN}", methods=['POST'])
 def webhook():
     update = Update.de_json(request.get_json(force=True), bot)
     dispatcher.process_update(update)
     return "ok"
 
-# 🌐 روت اصلی برای تست
+#  روت اصلی برای تست
 @app.route('/')
 def home():
     return "ربات OCR تلگرام با Flask اجرا شده است ✅"
